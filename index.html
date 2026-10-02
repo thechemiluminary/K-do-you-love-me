@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#FFD1E3">
+<meta name="description" content="A very important question. Two buttons. Choose wisely.">
+<title>Do You Love Me?</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 7'%3E%3Crect width='8' height='7' fill='%23FFD1E3'/%3E%3Cpath d='M1 0h2v1H1zM4 0h2v1H4zM0 1h7v2H0zM1 3h5v1H1zM2 4h3v1H2zM3 5h1v1H3z' fill='%23B3004D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink-bg:      #FFD1E3;
+    --pink-card:    #FFF4F8;
+    --pink-soft:    #FFE9F2;
+    --pink-line:    #FFB6CE;
+    --pink-hot:     #FF8FC0;
+    --ink:          #4A0D2A;
+    --ink-soft:     #6B0F33;
+    --yes:          #B3004D;
+    --no:           #8A0038;
+    --border:       4px;
+    --offset:       5px;
+    --u:            6px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ -webkit-text-size-adjust:100%; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    padding:24px 18px calc(24px + env(safe-area-inset-bottom));
+    font-family:"VT323", ui-monospace, "Courier New", monospace;
+    color:var(--ink);
+    background-color:var(--pink-bg);
+    background-image:
+      radial-gradient(circle at 50% 12%, rgba(255,255,255,.55), transparent 60%),
+      repeating-linear-gradient(0deg,  rgba(74,13,42,.05) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, rgba(74,13,42,.05) 0 1px, transparent 1px 32px);
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* ---------- decorative pixel heart ---------- */
+  .heart{
+    position:relative;
+    width:0; height:0;
+    color:var(--yes);
+    flex:none;
+  }
+  .heart::before{
+    content:"";
+    position:absolute;
+    width:1px; height:1px;
+    box-shadow:
+      calc(1 * var(--u)) calc(0 * var(--u)) 0 currentColor,
+      calc(2 * var(--u)) calc(0 * var(--u)) 0 currentColor,
+      calc(4 * var(--u)) calc(0 * var(--u)) 0 currentColor,
+      calc(5 * var(--u)) calc(0 * var(--u)) 0 currentColor,
+      calc(0 * var(--u)) calc(1 * var(--u)) 0 currentColor,
+      calc(1 * var(--u)) calc(1 * var(--u)) 0 currentColor,
+      calc(2 * var(--u)) calc(1 * var(--u)) 0 currentColor,
+      calc(3 * var(--u)) calc(1 * var(--u)) 0 currentColor,
+      calc(4 * var(--u)) calc(1 * var(--u)) 0 currentColor,
+      calc(5 * var(--u)) calc(1 * var(--u)) 0 currentColor,
+      calc(6 * var(--u)) calc(1 * var(--u)) 0 currentColor,
+      calc(0 * var(--u)) calc(2 * var(--u)) 0 currentColor,
+      calc(1 * var(--u)) calc(2 * var(--u)) 0 currentColor,
+      calc(2 * var(--u)) calc(2 * var(--u)) 0 currentColor,
+      calc(3 * var(--u)) calc(2 * var(--u)) 0 currentColor,
+      calc(4 * var(--u)) calc(2 * var(--u)) 0 currentColor,
+      calc(5 * var(--u)) calc(2 * var(--u)) 0 currentColor,
+      calc(6 * var(--u)) calc(2 * var(--u)) 0 currentColor,
+      calc(1 * var(--u)) calc(3 * var(--u)) 0 currentColor,
+      calc(2 * var(--u)) calc(3 * var(--u)) 0 currentColor,
+      calc(3 * var(--u)) calc(3 * var(--u)) 0 currentColor,
+      calc(4 * var(--u)) calc(3 * var(--u)) 0 currentColor,
+      calc(5 * var(--u)) calc(3 * var(--u)) 0 currentColor,
+      calc(2 * var(--u)) calc(4 * var(--u)) 0 currentColor,
+      calc(3 * var(--u)) calc(4 * var(--u)) 0 currentColor,
+      calc(4 * var(--u)) calc(4 * var(--u)) 0 currentColor,
+      calc(3 * var(--u)) calc(5 * var(--u)) 0 currentColor;
+    top:0; left:0;
+  }
+
+  .heart--lg{ --u:11px; }
+
+  .heart--beat{ animation:beat 1.4s steps(4,end) infinite; }
+  @keyframes beat{
+    0%,100%{ transform:scale(1); }
+    25%    { transform:scale(1.08); }
+    50%    { transform:scale(1); }
+    75%    { transform:scale(1.05); }
+  }
+
+  /* ---------- card ---------- */
+  .card{
+    position:relative;
+    width:100%;
+    max-width:440px;
+    background:var(--pink-card);
+    border:var(--border) solid var(--ink);
+    box-shadow:var(--offset) var(--offset) 0 var(--pink-hot);
+    padding:26px 20px 24px;
+    text-align:center;
+  }
+  /* corner brackets */
+  .card::before,
+  .card::after{
+    content:"";
+    position:absolute;
+    width:12px; height:12px;
+    border:3px solid var(--yes);
+  }
+  .card::before{ top:8px;    left:8px;  border-right:0; border-bottom:0; }
+  .card::after { bottom:8px; right:8px; border-left:0;  border-top:0;    }
+
+  .kicker{
+    font-family:"VT323", monospace;
+    font-size:clamp(1.05rem, 4.2vw, 1.35rem);
+    color:var(--ink-soft);
+    margin:0 0 14px;
+    letter-spacing:.06em;
+  }
+
+  h1{
+    font-family:"Press Start 2P", monospace;
+    font-weight:400;
+    font-size:clamp(1.05rem, 5.6vw, 1.6rem);
+    line-height:1.6;
+    letter-spacing:.02em;
+    margin:0 0 8px;
+    color:var(--ink);
+    overflow-wrap:anywhere;
+  }
+
+  .rule{
+    height:var(--border);
+    background:var(--ink);
+    margin:16px auto 20px;
+    width:64px;
+  }
+
+  /* ---------- buttons ---------- */
+  .buttons{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+  }
+
+  .btn{
+    flex:1 1 130px;
+    min-width:130px;
+    min-height:58px;
+    padding:14px 12px;
+    font-family:"Press Start 2P", monospace;
+    font-size:clamp(.8rem, 3.4vw, .95rem);
+    letter-spacing:.04em;
+    color:#fff;
+    background:var(--yes);
+    border:var(--border) solid var(--ink);
+    box-shadow:var(--offset) var(--offset) 0 var(--ink);
+    cursor:pointer;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform 60ms steps(2,end), box-shadow 60ms steps(2,end), background-color 60ms linear;
+  }
+  .btn[data-label="No"]{ background:var(--no); }
+
+  .btn:active{
+    transform:translate(var(--offset), var(--offset));
+    box-shadow:0 0 0 var(--ink);
+  }
+  .btn:focus-visible{
+    outline:3px solid var(--ink);
+    outline-offset:4px;
+  }
+  .btn[aria-disabled="true"]{
+    cursor:default;
+    pointer-events:none;
+  }
+
+  /* ---------- status / taunts ---------- */
+  .status{
+    min-height:3.4em;
+    margin:20px 0 0;
+    font-size:clamp(1.2rem, 5vw, 1.5rem);
+    line-height:1.15;
+    color:var(--ink-soft);
+  }
+  .status--shout{
+    font-family:"Press Start 2P", monospace;
+    font-size:clamp(.85rem, 3.6vw, 1.05rem);
+    line-height:1.7;
+    color:var(--yes);
+  }
+
+  .counter{
+    margin:2px 0 0;
+    font-size:clamp(1rem, 4vw, 1.2rem);
+    color:var(--ink-soft);
+  }
+
+  /* ---------- win ---------- */
+  .win-heart{
+    --u:9px;
+    display:none;
+    justify-content:center;
+    margin:0 auto 18px;
+  }
+  .win-heart.is-on{ display:flex; }
+
+  .stars{
+    font-size:clamp(1.3rem, 5.5vw, 1.8rem);
+    letter-spacing:.25em;
+    color:var(--yes);
+    margin:0 0 14px;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    font-size:1.1rem;
+    color:var(--ink-soft);
+    text-align:center;
+    max-width:440px;
+    margin:0;
+  }
+
+  /* ---------- floating hearts ---------- */
+  .floater{
+    position:fixed;
+    bottom:-60px;
+    width:0; height:0;
+    color:var(--pink-hot);
+    pointer-events:none;
+    z-index:0;
+    animation:rise linear infinite;
+  }
+  @keyframes rise{
+    0%  { transform:translateY(0)     scale(1);   opacity:0; }
+    12% {                              opacity:.85; }
+    88% {                              opacity:.5;  }
+    100%{ transform:translateY(-110vh) scale(.6);  opacity:0; }
+  }
+
+  /* ---------- confetti ---------- */
+  .confetti-layer{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:5;
+  }
+  .confetti-bit{
+    position:absolute;
+    top:-20px;
+    width:9px; height:9px;
+    animation:fall linear forwards;
+  }
+  @keyframes fall{
+    0%  { transform:translateY(0) rotate(0deg);    opacity:1; }
+    100%{ transform:translateY(105vh) rotate(540deg); opacity:.9; }
+  }
+
+  .stage{ position:relative; z-index:1; }
+
+  /* ---------- motion off ---------- */
+  @media (prefers-reduced-motion: reduce){
+    .floater,
+    .confetti-layer,
+    .heart--beat{ display:none !important; }
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; }
+    .btn{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="heart heart--beat" aria-hidden="true" style="--u:7px; margin:0 auto 20px;"></div>
+
+  <main class="card">
+    <div class="win-heart heart" aria-hidden="true"></div>
+
+    <p class="kicker">one question. two buttons. no take-backs.</p>
+
+    <h1>Do you love me?</h1>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <div class="buttons">
+      <button class="btn" type="button" data-label="Yes">Yes</button>
+      <button class="btn" type="button" data-label="No">No</button>
+    </div>
+
+    <p class="status" id="status" role="status" aria-live="polite">&nbsp;</p>
+    <p class="counter" id="counter" aria-live="polite">&nbsp;</p>
+  </main>
+
+  <footer>
+    pick carefully &mdash; the wrong button is a myth
+  </footer>
+</div>
+
+<div class="confetti-layer" id="confetti" aria-hidden="true"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var buttons   = Array.prototype.slice.call(document.querySelectorAll(".btn"));
+  var statusEl  = document.getElementById("status");
+  var counterEl = document.getElementById("counter");
+  var winHeart  = document.querySelector(".win-heart");
+  var confetti  = document.getElementById("confetti");
+
+  var TAUNTS = [
+    "Are you sure?",
+    "That was the wrong button.",
+    "Bold choice.",
+    "Your finger slipped. I saw it.",
+    "Hmmm. Really?",
+    "The \"No\" button is right there.",
+    "That's cute. Try the other one.",
+    "I love that for you. Truly.",
+    "You do not love the No button. I believe that.",
+    "Reconsider. It costs nothing."
+  ];
+
+  var CONFETTI_COLORS = ["#FFFFFF", "#FFD1E3", "#FFE9F2", "#FF8FC0", "#B3004D"];
+  var BANNED = ["y", "Y", "Escape", "Esc"];
+  var attempts = 0;
+  var locked = false;
+
+  /* ---------- tiny 8-bit sounds, no files ---------- */
+  var audio = null;
+
+  function wakeAudio() {
+    if (audio) { return audio; }
+    var Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) { audio = false; return audio; }
+    try { audio = new Ctx(); } catch (e) { audio = false; }
+    return audio;
+  }
+
+  function blip(freq, duration, when) {
+    var ctx = wakeAudio();
+    if (!ctx) { return; }
+    if (ctx.state === "suspended") { ctx.resume(); }
+
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    var start = ctx.currentTime + (when || 0);
+
+    osc.type = "square";
+    osc.frequency.setValueAtTime(freq, start);
+
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(0.09, start + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(start);
+    osc.stop(start + duration + 0.02);
+  }
+
+  function playNo()  { blip(220, 0.09, 0);    blip(165, 0.11, 0.09); }
+  function playYes() {
+    [523.25, 659.25, 783.99, 1046.50].forEach(function (f, i) {
+      blip(f, 0.13, i * 0.075);
+    });
+  }
+
+  /* ---------- confetti ---------- */
+  function burstConfetti() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { return; }
+
+    var bits = 70;
+    for (var i = 0; i < bits; i++) {
+      var bit = document.createElement("span");
+      bit.className = "confetti-bit";
+      bit.style.left = (Math.random() * 100) + "vw";
+      bit.style.background = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
+      bit.style.animationDuration = (1.9 + Math.random() * 1.6) + "s";
+      bit.style.animationDelay = (Math.random() * 0.45) + "s";
+      confetti.appendChild(bit);
+
+      (function (el) {
+        setTimeout(function () { el.remove(); }, 4200);
+      })(bit);
+    }
+  }
+
+  /* ---------- floating background hearts ---------- */
+  (function plantFloaters() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { return; }
+
+    var spots = [8, 22, 37, 58, 74, 88];
+    spots.forEach(function (left, i) {
+      var f = document.createElement("div");
+      f.className = "heart floater";
+      f.style.left = left + "vw";
+      f.style.setProperty("--u", (4 + (i % 3)) + "px");
+      f.style.animationDuration = (11 + i * 2.4) + "s";
+      f.style.animationDelay = (i * 1.7) + "s";
+      document.body.appendChild(f);
+    });
+  })();
+
+  /* ---------- the swap ---------- */
+  function swapLabels() {
+    buttons.forEach(function (btn) {
+      btn.textContent = btn.dataset.label === "Yes" ? "No" : "Yes";
+      btn.dataset.label = btn.textContent;
+    });
+  }
+
+  function say(message, shout) {
+    statusEl.textContent = message;
+    statusEl.classList.toggle("status--shout", !!shout);
+  }
+
+  function updateCounter() {
+    if (attempts === 0) { counterEl.innerHTML = "&nbsp;"; return; }
+    counterEl.textContent =
+      "wrong answers so far: " + attempts + (attempts === 1 ? "  (one)" : "");
+  }
+
+  /* ---------- win ---------- */
+  function celebrate() {
+    locked = true;
+
+    buttons.forEach(function (btn) {
+      btn.setAttribute("aria-disabled", "true");
+    });
+
+    winHeart.classList.add("is-on");
+
+    say("FINAL ANSWER LOCKED IN", true);
+    counterEl.textContent = "correct answer on attempt " + (attempts + 1);
+    counterEl.classList.add("status--shout");
+
+    playYes();
+    burstConfetti();
+  }
+
+  /* ---------- click handling ---------- */
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      if (locked) { return; }
+
+      if (btn.dataset.label === "Yes") {
+        celebrate();
+        return;
+      }
+
+      attempts += 1;
+      updateCounter();
+
+      playNo();
+      swapLabels();
+      say(TAUNTS[Math.min(attempts - 1, TAUNTS.length - 1)], false);
+    });
+  });
+
+  /* ---------- keyboard guard ---------- */
+  window.addEventListener("keydown", function (e) {
+    if (BANNED.indexOf(e.key) !== -1) {
+      e.preventDefault();
+      if (!locked) {
+        say("That key does not work here.", false);
+        blip(140, 0.12, 0);
+      }
+    }
+  });
+
+  /* ---------- audio unlock on first touch anywhere ---------- */
+  window.addEventListener("pointerdown", function once() {
+    wakeAudio();
+    window.removeEventListener("pointerdown", once);
+  }, { passive: true });
+
+  updateCounter();
+})();
+</script>
+</body>
+</html>
