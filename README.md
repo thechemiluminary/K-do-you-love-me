@@ -37,6 +37,8 @@ All of it is in `index.html`. The bits worth touching:
 | --- | --- |
 | The question text | `<h1>` near the bottom of the file |
 | Taunt lines after a wrong answer | `TAUNTS` array in the script |
+| How many wrong answers before "No" is removed | `FORCE_AT` (currently 5) |
+| Lines shown once both buttons say Yes | `FORCED_LINES` array |
 | Opening line above the question | `.kicker` |
 | Footer line | `<footer>` |
 | Confetti colors | `CONFETTI_COLORS` |

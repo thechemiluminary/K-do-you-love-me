@@ -339,6 +339,17 @@
     "Reconsider. It costs nothing."
   ];
 
+  /* After this many wrong answers the "No" button stops existing.
+     Both buttons read Yes, so there is no other option left. */
+  var FORCE_AT = 5;
+
+  var FORCED_LINES = [
+    "Both buttons say yes now.",
+    "So does the one you keep pressing.",
+    "The No button was a concept, not a button.",
+    "There was never a No button."
+  ];
+
   var CONFETTI_COLORS = ["#FFFFFF", "#FFD1E3", "#FFE9F2", "#FF8FC0", "#B3004D"];
   var BANNED = ["y", "Y", "Escape", "Esc"];
   var attempts = 0;
@@ -422,10 +433,15 @@
 
   /* ---------- the swap ---------- */
   function swapLabels() {
+    var forced = attempts >= FORCE_AT;
+
     buttons.forEach(function (btn) {
-      btn.textContent = btn.dataset.label === "Yes" ? "No" : "Yes";
+      /* past the threshold both buttons become Yes, permanently */
+      btn.textContent = forced ? "Yes" : (btn.dataset.label === "Yes" ? "No" : "Yes");
       btn.dataset.label = btn.textContent;
     });
+
+    return forced;
   }
 
   function say(message, shout) {
@@ -437,6 +453,10 @@
     if (attempts === 0) { counterEl.innerHTML = "&nbsp;"; return; }
     counterEl.textContent =
       "wrong answers so far: " + attempts + (attempts === 1 ? "  (one)" : "");
+
+    if (attempts >= FORCE_AT) {
+      counterEl.textContent += "  \u00b7  no other option remains";
+    }
   }
 
   /* ---------- win ---------- */
@@ -444,6 +464,9 @@
     locked = true;
 
     buttons.forEach(function (btn) {
+      /* make sure a win can never display a No button */
+      btn.textContent = "Yes";
+      btn.dataset.label = "Yes";
       btn.setAttribute("aria-disabled", "true");
     });
 
@@ -471,8 +494,15 @@
       updateCounter();
 
       playNo();
-      swapLabels();
-      say(TAUNTS[Math.min(attempts - 1, TAUNTS.length - 1)], false);
+
+      var forced = swapLabels();
+
+      if (forced) {
+        say(FORCED_LINES[Math.min(attempts - FORCE_AT, FORCED_LINES.length - 1)], true);
+        counterEl.classList.add("status--shout");
+      } else {
+        say(TAUNTS[Math.min(attempts - 1, TAUNTS.length - 1)], false);
+      }
     });
   });
 
