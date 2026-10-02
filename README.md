@@ -1,7 +1,12 @@
 # Do You Love Me?
 
-A one-question pixel game. Pink background, two buttons. Clicking **No** swaps the
-buttons, clicking **Yes** locks the answer in. Static site, no build step.
+A one-question pixel game. Pink background, two buttons.
+
+- Tap **Yes** — you get the celebration.
+- Tap **No** — the button corrects itself into **Yes**, then you get the celebration
+  anyway.
+
+Either way she ends up on the win screen. Static site, no build step.
 
 ## Deploy to GitHub Pages
 
@@ -36,12 +41,15 @@ All of it is in `index.html`. The bits worth touching:
 | What | Where |
 | --- | --- |
 | The question text | `<h1>` near the bottom of the file |
-| Taunt lines after a wrong answer | `TAUNTS` array in the script |
-| How many wrong answers before "No" is removed | `FORCE_AT` (currently 5) |
-| Lines shown once both buttons say Yes | `FORCED_LINES` array |
+| The winning headline | `WIN_LINE` in the script |
+| The small line under it | `WIN_SUB` in the script |
+| Line shown during the No → Yes flip | `CORRECTED` in the script |
 | Opening line above the question | `.kicker` |
 | Footer line | `<footer>` |
 | Confetti colors | `CONFETTI_COLORS` |
+
+To change the delay between the flip and the celebration, edit the `setTimeout`
+call at the bottom of the script (currently 520ms).
 
 Colors live in the `:root` block at the top of the `<style>`. Every text/background
 pair was checked against WCAG AA, so text stays readable — if you change a color,
